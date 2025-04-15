@@ -9,6 +9,7 @@ router.get('/profile', async (req, res) => {
         // console.log(userdata.name)
         // res.send({ message: userdata.name })
         console.log(userId)
+        console.log(req.session.userId)
         res.send({ message: userId })
     } catch (err) {
         console.log(err)

@@ -14,6 +14,7 @@ async function profile() {
     const req = await fetch('http://localhost:3600/profile', {
         method: "GET",
         headers: { 'Content-Type': 'application/json' },
+        credentials: true,
         body: id
     })
 

@@ -21,6 +21,13 @@ router.post('/signup', async (req, res) => {
 
     if (userId) {
         req.session.userId = userId._id.toString();
+        req.session.save(err => {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log('session saved');
+            }
+        })
         console.log('Logged in')
         res.status(200).json({ message: req.session.userId })
     } else {
