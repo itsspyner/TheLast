@@ -4,6 +4,14 @@ const userModel = require('../dataBase/models/userModel.js');
 const validate = require('../validation/signupUserValidation.js')
 const userSchema = require('../dataBase/schema/userSchema.js');
 
+// router.get('/signup', (req, res) => {
+//     if (req.session.userId) {
+//         res.redirect('http://127.0.0.1:5500/frontEnd/html/profile.html')
+//     } else {
+//         res.redirect('http://127.0.0.1:5500/frontEnd/html/signup.html')
+//     }
+// })
+
 router.post('/signup', async (req, res) => {
     const emailAvailable = await validate.emailAlreadyExists(req.body.email);
     const phoneAvailable = await validate.phoneAlreadyExists(Number(req.body.phone));
@@ -18,23 +26,7 @@ router.post('/signup', async (req, res) => {
     await userModel.addUser(req.body)
 
     const userId = await userSchema.findOne({ email: req.body.email }).select('_id');
-
-    if (userId) {
-        req.session.userId = userId._id.toString();
-        req.session.save(err => {
-            if (err) {
-                console.log(err)
-            } else {
-                console.log('session saved');
-            }
-        })
-        console.log('Logged in')
-        res.status(200).json({ message: req.session.userId })
-    } else {
-        console.log("Cannot loggin")
-    }
-
-    console.log(req.session.userId)
+    const id = userId.toString();
 
 })
 
