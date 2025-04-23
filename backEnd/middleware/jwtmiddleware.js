@@ -1,9 +1,11 @@
 const jwt = require('jsonwebtoken')
 
 function jwtMiddleware(req, res, next) {
-    const cookie = req.query.c
-    const cookie_name = cookie.replace(/ /g, '+')
-    const token = req.cookies[cookie_name];
+    const cookie = req.cookies
+    let token = ''
+    for (key in cookie) {
+        token = cookie[key]
+    }
     if (!token) {
         return res.status(401).json({ error: 'No token provided' });
     }

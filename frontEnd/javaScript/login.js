@@ -29,7 +29,10 @@ document.getElementById('container').addEventListener('submit', async function v
 
     const res = await req.json()
     if (req.ok) {
-        window.open(`http://127.0.0.1:5500/frontEnd/html/profile.html?c=${res.message}`, '_self')
+        if (res.redirect) {
+            window.open(res.url, '_self')
+        }
+        window.open(`http://127.0.0.1:5500/frontEnd/html/profile.html`, '_self')
         document.getElementById('form').reset();
     } else {
         if (res.emailErr) {
